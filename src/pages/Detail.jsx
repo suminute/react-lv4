@@ -20,8 +20,8 @@ const Detail = () => {
     <div>
       <p>디테일 페이지</p>
       <p>{id}</p>
-      <p>{detailPost.title}</p>
       <p>{detailPost.userName}</p>
+      <p>{detailPost.body}</p>
     </div>
   );
 };
