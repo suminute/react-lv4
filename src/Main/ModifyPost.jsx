@@ -1,58 +1,53 @@
 import React from "react";
-import Modal from "../components/common/Modal";
 import useInput from "../hooks/useInput";
+import Modal from "../components/common/Modal";
 import Button from "../components/common/Button";
-import shortid from "shortid";
 import { useMutation, useQueryClient } from "react-query";
-import { addPost } from "../api/posts";
+import { modifyPost } from "../api/posts";
 
-const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
-  const [title, onChangeTitleHandler] = useInput("");
-  const [body, onChangeBodyHandler] = useInput("");
-  const [userName, onChangeUserNameHandler] = useInput("");
-  const [kcal, onChangeKcalHandler] = useInput("");
-  const [exerciseHour, onChangeExerciseHourHandler] = useInput("");
-  const [password, onChangePasswordHandler] = useInput("");
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+const ModifyPost = ({ posts, post, closeModal, id }) => {
+  const [title, onChangeTitleHandler] = useInput(post.title);
+  const [body, onChangeBodyHandler] = useInput(post.body);
+  const [userName, onChangeUserNameHandler] = useInput(post.userName);
+  const [kcal, onChangeKcalHandler] = useInput(post.kcal);
+  const [exerciseHour, onChangeExerciseHourHandler] = useInput(post.exerciseHour);
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(addPost, {
+  const mutation = useMutation(modifyPost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
   });
 
-  const newPost = {
-    id: shortid.generate(),
-    title,
-    body,
-    userName,
-    password,
-    date: getToday(),
-    kcal,
-    exerciseHour,
-  };
-
-  const onSubmitHandler = (e) => {
+  const updatePost = (e) => {
     e.preventDefault();
-    // setPosts([...posts, newPost]);
-    mutation.mutate(newPost);
+    // const newPost = posts.map((post) => {
+    //   if (post.postId === postId) {
+    //     const modifiedPost = {
+    //       title,
+    //       body,
+    //       userName,
+    //       kcal,
+    //       exerciseHour,
+    //     };
+    //     return { ...post, ...modifiedPost };
+    //   } else {
+    //     return post;
+    //   }
+    // });
+    // setPosts(newPost);
+    let modifiedPost = posts.find((post) => post.id === id);
+    modifiedPost = { ...modifiedPost, title, body, userName, kcal, exerciseHour };
+    console.log(modifiedPost);
+    mutation.mutate({ id, modifiedPost });
     closeModal();
   };
-
   return (
     <Modal>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={updatePost}>
         <div>
           <label>작성자명</label>
           <input value={userName} onChange={onChangeUserNameHandler} />
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input value={password} onChange={onChangePasswordHandler} />
         </div>
         <div>
           <label>제목</label>
@@ -79,4 +74,4 @@ const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
   );
 };
 
-export default Write;
+export default ModifyPost;
