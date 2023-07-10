@@ -21,4 +21,5 @@ const modifyPost = async ({ id, modifiedPost }) => {
   await axios.patch(`http://localhost:4000/posts/${id}`, modifiedPost);
   console.log(modifiedPost);
 };
+
 export { getPosts, deletePost, addPost, modifyPost };

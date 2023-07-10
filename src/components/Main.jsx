@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "./common/Button";
 import Write from "../Main/Write";
-import shortid from "shortid";
 import Post from "../Main/Post";
 import { useQuery } from "react-query";
 import { getPosts } from "../api/posts";

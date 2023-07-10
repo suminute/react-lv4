@@ -1,44 +1,34 @@
 {
   "posts": [
     {
-      "id": 2,
-      "title": "제목2",
-      "body": "내용2",
-      "userName": "몽식이2",
-      "password": "1234",
-      "date": "23-07-10 15:27",
-      "kcal": "100",
-      "exerciseHour": "30"
-    },
-    {
-      "title": "12334234",
-      "body": "12423424422",
-      "userName": "777",
-      "password": "124",
-      "date": "23-07-10 16:39",
-      "kcal": "124",
-      "exerciseHour": "214",
-      "id": 5
-    },
-    {
-      "title": "제목5",
-      "body": "내용7",
-      "userName": "몽식간식2",
-      "password": "1234",
-      "date": "23-07-10 17:12",
-      "kcal": "123",
-      "exerciseHour": "43",
-      "id": 6
-    },
-    {
       "id": "3GYkowmdK-",
-      "title": "123",
+      "title": "ㅎ힘들다",
       "body": "123123",
       "userName": "1231",
       "password": "23123",
       "date": "23-07-10 17:12",
       "kcal": "123123",
       "exerciseHour": "123123"
+    },
+    {
+      "id": "UWMLXAWnTt",
+      "title": "1231",
+      "body": "12",
+      "userName": "몽식",
+      "password": "1234",
+      "date": "23-07-10 17:25",
+      "kcal": "132",
+      "exerciseHour": "13"
+    },
+    {
+      "id": "Su499yR424",
+      "title": "123",
+      "body": "123",
+      "userName": "몽식간식",
+      "password": "1234",
+      "date": "23-07-10 17:29",
+      "kcal": "123",
+      "exerciseHour": "123"
     }
   ]
 }

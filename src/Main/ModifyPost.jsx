@@ -21,21 +21,6 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
 
   const updatePost = (e) => {
     e.preventDefault();
-    // const newPost = posts.map((post) => {
-    //   if (post.postId === postId) {
-    //     const modifiedPost = {
-    //       title,
-    //       body,
-    //       userName,
-    //       kcal,
-    //       exerciseHour,
-    //     };
-    //     return { ...post, ...modifiedPost };
-    //   } else {
-    //     return post;
-    //   }
-    // });
-    // setPosts(newPost);
     let modifiedPost = posts.find((post) => post.id === id);
     modifiedPost = { ...modifiedPost, title, body, userName, kcal, exerciseHour };
     console.log(modifiedPost);

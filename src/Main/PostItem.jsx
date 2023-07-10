@@ -6,7 +6,7 @@ import ModifyPost from "./ModifyPost";
 import { useMutation, useQueryClient } from "react-query";
 import { deletePost } from "../api/posts";
 
-const PostItem = ({ posts, post, setPosts }) => {
+const PostItem = ({ posts, post }) => {
   const divCard = { border: "1px solid black", padding: "10px", margin: "10px" };
 
   const [isOpen, openModal, closeModal] = useModal();
@@ -33,7 +33,7 @@ const PostItem = ({ posts, post, setPosts }) => {
         <p>{post.date}</p>
       </Link>
       <Button onClick={openModal}>수정</Button>
-      {isOpen && <ModifyPost posts={posts} post={post} setPosts={setPosts} id={post.id} closeModal={closeModal} />}
+      {isOpen && <ModifyPost posts={posts} post={post} id={post.id} closeModal={closeModal} />}
       <Button
         onClick={() => {
           onClickDeleteButtonHandler(post.id);
