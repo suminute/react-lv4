@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from "react-query";
 import { modifyPost } from "../api/posts";
 
 const ModifyPost = ({ posts, post, closeModal, id }) => {
-  const [title, onChangeTitleHandler] = useInput(post.title);
   const [body, onChangeBodyHandler] = useInput(post.body);
   const [userName, onChangeUserNameHandler] = useInput(post.userName);
   const [kcal, onChangeKcalHandler] = useInput(post.kcal);
@@ -22,10 +21,15 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
   const updatePost = (e) => {
     e.preventDefault();
     let modifiedPost = posts.find((post) => post.id === id);
-    modifiedPost = { ...modifiedPost, title, body, userName, kcal, exerciseHour };
-    console.log(modifiedPost);
-    mutation.mutate({ id, modifiedPost });
-    closeModal();
+    const confirmPassword = window.prompt("비밀번호를 입력하세요");
+    if (modifiedPost.password === confirmPassword) {
+      modifiedPost = { ...modifiedPost, body, userName, kcal, exerciseHour };
+      mutation.mutate({ id, modifiedPost });
+      closeModal();
+      alert("수정되었습니다!");
+    } else {
+      alert("비밀번호가 틀렸습니다!");
+    }
   };
   return (
     <Modal>
@@ -34,23 +38,21 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
           <label>작성자명</label>
           <input value={userName} onChange={onChangeUserNameHandler} />
         </div>
-        <div>
-          <label>제목</label>
-          <input value={title} onChange={onChangeTitleHandler} />
-        </div>
+        {userName.length < 2 && <p>이름을 2글자 이상 입력해 주세요</p>}
+        {userName.length >= 2 && <p>사용 가능한 이름입니다</p>}
         <div>
           <label>내용</label>
           <input value={body} onChange={onChangeBodyHandler} />
         </div>
         <div>
           <label>오늘 소모한 칼로리</label>
-          <input value={kcal} onChange={onChangeKcalHandler} />
+          <input type='number' value={kcal} onChange={onChangeKcalHandler} />
         </div>
         <div>
           <label>오늘 운동한 시간</label>
-          <input value={exerciseHour} onChange={onChangeExerciseHourHandler} />
+          <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
         </div>
-        <Button>저장</Button>
+        <Button disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</Button>
         <Button type='button' onClick={closeModal}>
           닫기
         </Button>

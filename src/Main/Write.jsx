@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../components/common/Modal";
 import useInput from "../hooks/useInput";
 import Button from "../components/common/Button";
@@ -6,17 +6,24 @@ import shortid from "shortid";
 import { useMutation, useQueryClient } from "react-query";
 import { addPost } from "../api/posts";
 
-const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
-  const [title, onChangeTitleHandler] = useInput("");
+const Write = ({ closeModal }) => {
   const [body, onChangeBodyHandler] = useInput("");
   const [userName, onChangeUserNameHandler] = useInput("");
   const [kcal, onChangeKcalHandler] = useInput("");
   const [exerciseHour, onChangeExerciseHourHandler] = useInput("");
   const [password, onChangePasswordHandler] = useInput("");
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const getToday = () => {
+    const today = new Date();
+    const year = ("0" + today.getFullYear()).slice(-2);
+    const month = ("0" + (today.getMonth() + 1)).slice(-2);
+    const date = ("0" + today.getDate()).slice(-2);
+    const hours = ("0" + today.getHours()).slice(-2);
+    const minutes = ("0" + today.getMinutes()).slice(-2);
+    return `${year}-${month}-${date} ${hours}:${minutes}`;
   };
+
+  const [disabled, setDisabled] = useState(true);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addPost, {
@@ -27,7 +34,6 @@ const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
 
   const newPost = {
     id: shortid.generate(),
-    title,
     body,
     userName,
     password,
@@ -38,7 +44,6 @@ const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // setPosts([...posts, newPost]);
     mutation.mutate(newPost);
     closeModal();
   };
@@ -50,27 +55,30 @@ const Write = ({ setIsOpen, setPosts, getToday, posts }) => {
           <label>작성자명</label>
           <input value={userName} onChange={onChangeUserNameHandler} />
         </div>
+        {userName.length < 2 && <p>이름을 2글자 이상 입력해 주세요</p>}
+        {userName.length >= 2 && <p>사용 가능한 이름입니다</p>}
         <div>
           <label>비밀번호</label>
-          <input value={password} onChange={onChangePasswordHandler} />
+          <input type='password' value={password} onChange={onChangePasswordHandler} />
         </div>
-        <div>
-          <label>제목</label>
-          <input value={title} onChange={onChangeTitleHandler} />
-        </div>
+        {password.length < 4 && <p>비밀번호를 4글자 이상 입력해 주세요</p>}
+        {password.length >= 4 && <p>사용 가능한 비밀번호입니다</p>}
         <div>
           <label>내용</label>
           <input value={body} onChange={onChangeBodyHandler} />
         </div>
+        {body.length < 5 && <p>5글자 이상 입력해 주세요</p>}
         <div>
           <label>오늘 소모한 칼로리</label>
-          <input value={kcal} onChange={onChangeKcalHandler} />
+          <input type='number' value={kcal} onChange={onChangeKcalHandler} />
+          {!kcal.length && <p>숫자를 입력하세요</p>}
         </div>
         <div>
           <label>오늘 운동한 시간</label>
-          <input value={exerciseHour} onChange={onChangeExerciseHourHandler} />
+          <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
         </div>
-        <Button>저장</Button>
+        {!exerciseHour.length && <p>숫자를 입력하세요</p>}
+        <Button disabled={body.length < 5 || password.length < 4 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</Button>
         <Button type='button' onClick={closeModal}>
           닫기
         </Button>

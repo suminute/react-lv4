@@ -19,15 +19,21 @@ const PostItem = ({ posts, post }) => {
   });
 
   const onClickDeleteButtonHandler = (id) => {
-    mutation.mutate(id);
+    const deletedPost = posts.find((post) => post.id === id);
+    const confirmPassword = window.prompt("비밀번호를 입력하세요");
+    if (deletedPost.password === confirmPassword) {
+      mutation.mutate(id);
+      alert("삭제 되었습니다!");
+    } else {
+      alert("비밀번호가 틀렸습니다!");
+    }
   };
 
   return (
-    <div style={divCard} key={post.id}>
+    <div style={divCard}>
       <Link to={`/detail/${post.id}`}>
-        <p>{post.title}</p>
-        <p>{post.body}</p>
         <p>{post.userName}</p>
+        <p>{post.body}</p>
         <p>{post.kcal}</p>
         <p>{post.exerciseHour}</p>
         <p>{post.date}</p>
