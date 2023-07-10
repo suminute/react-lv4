@@ -1,24 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import PostItem from "./PostItem";
+import { useQuery } from "react-query";
+import getPosts from "../api/posts";
 
-const Post = ({ posts }) => {
-  const divCard = { border: "1px solid black", padding: "10px", margin: "10px" };
-
+const Post = ({ posts, setPosts }) => {
   return (
     <>
-      {posts.map((post) => {
-        return (
-          <Link to={`/detail/${post.postId}`}>
-            <div style={divCard} key={post.postId}>
-              <p>{post.title}</p>
-              <p>{post.body}</p>
-              <p>{post.userName}</p>
-              <p>{post.kcal}</p>
-              <p>{post.exerciseHour}</p>
-              <p>{post.date}</p>
-            </div>
-          </Link>
-        );
+      {posts?.map((post) => {
+        return <PostItem key={post.id} posts={posts} post={post} setPosts={setPosts}></PostItem>;
       })}
     </>
   );

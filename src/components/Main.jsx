@@ -3,6 +3,8 @@ import Button from "./common/Button";
 import Write from "../Main/Write";
 import shortid from "shortid";
 import Post from "../Main/Post";
+import { useQuery } from "react-query";
+import { getPosts } from "../api/posts";
 
 const Main = () => {
   const getToday = () => {
@@ -15,29 +17,16 @@ const Main = () => {
     return `${year}-${month}-${date} ${hours}:${minutes}`;
   };
 
-  const [posts, setPosts] = useState([
-    {
-      postId: shortid.generate(),
-      title: "제목1",
-      body: "내용1",
-      userName: "몽식1",
-      date: getToday(),
-      kcal: "100",
-      exerciseHour: "30",
-      isDeleted: false,
-    },
-    {
-      postId: shortid.generate(),
-      title: "제목2",
-      body: "내용2",
-      userName: "몽식2",
-      date: getToday(),
-      kcal: "100",
-      exerciseHour: "30",
-      isDeleted: false,
-    },
-  ]);
+  const { isLoading, isError, data } = useQuery("posts", getPosts);
+  const [posts, setPosts] = useState(data);
   const [isOpen, setIsOpen] = useState(false);
+
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
+  if (isError) {
+    return <div>오류 발생...</div>;
+  }
 
   const openModal = () => {
     setIsOpen(true);
@@ -48,7 +37,7 @@ const Main = () => {
         <Button onClick={openModal}>글 작성하기</Button>
       </div>
       {isOpen && <Write setIsOpen={setIsOpen} setPosts={setPosts} getToday={getToday} posts={posts} />}
-      <Post posts={posts}></Post>
+      <Post posts={data} setPosts={setPosts}></Post>
     </>
   );
 };
