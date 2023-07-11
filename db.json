@@ -1,49 +1,48 @@
 {
   "posts": [
     {
-      "id": "MOULhIrxdg",
-      "body": "2344",
+      "id": "VHDSYHEqGh",
+      "body": "와와아ㅗ오아앙",
       "userName": "몽식몽식",
-      "password": "1234",
-      "date": "23-07-10 18:01",
-      "kcal": "1234",
-      "exerciseHour": "123"
-    },
-    {
-      "id": "zL_y1fOsBl",
-      "body": "123",
-      "userName": "123",
-      "password": "1234",
-      "date": "23-07-10 19:13",
-      "kcal": "123124",
-      "exerciseHour": "123123"
-    },
-    {
-      "id": "dbnXeCk9vC",
-      "body": "123",
-      "userName": "23",
-      "password": "1234",
-      "date": "23-07-10 19:19",
+      "userId": "b0x1QU6F4WOz9q4mTeVMGAZcD322",
+      "date": "23-07-11 17:06",
       "kcal": "123",
       "exerciseHour": "123"
     },
     {
-      "id": "bZY8aCr1j3",
-      "body": "12",
-      "userName": "몽식간식",
-      "password": "1234",
-      "date": "23-07-10 19:50",
-      "kcal": "12",
-      "exerciseHour": "12"
+      "id": "fUnjvFrnn",
+      "body": "벌써 아홉시",
+      "userName": "와앙",
+      "userId": "jIiuBB2LLea6Yt5xDntzfOIatTo2",
+      "date": "23-07-11 20:23",
+      "kcal": "100",
+      "exerciseHour": "100"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "test@test.com"
     },
     {
-      "id": "AgZ4OTZ1SB",
-      "body": "12",
-      "userName": "12312",
-      "password": "1234",
-      "date": "23-07-10 20:09",
-      "kcal": "12",
-      "exerciseHour": "12"
+      "id": 2,
+      "email": "test3@test.com"
+    },
+    {
+      "email": "test7@test.com",
+      "id": 3
+    },
+    {
+      "email": "test6@test.com",
+      "id": 4
+    },
+    {
+      "email": "test5@test.com",
+      "id": 5
+    },
+    {
+      "email": "test8@test.com",
+      "id": 6
     }
   ]
 }

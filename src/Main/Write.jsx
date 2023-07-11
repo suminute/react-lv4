@@ -1,17 +1,27 @@
 import React, { useState } from "react";
 import Modal from "../components/common/Modal";
 import useInput from "../hooks/useInput";
-import Button from "../components/common/Button";
+import ButtonComp from "../components/common/ButtonComp";
 import shortid from "shortid";
 import { useMutation, useQueryClient } from "react-query";
 import { addPost } from "../api/posts";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Write = ({ closeModal }) => {
   const [body, onChangeBodyHandler] = useInput("");
   const [userName, onChangeUserNameHandler] = useInput("");
   const [kcal, onChangeKcalHandler] = useInput("");
   const [exerciseHour, onChangeExerciseHourHandler] = useInput("");
-  const [password, onChangePasswordHandler] = useInput("");
+  const [user, setUser] = useState(auth.currentUser);
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("posts");
+    },
+  });
 
   const getToday = () => {
     const today = new Date();
@@ -23,20 +33,11 @@ const Write = ({ closeModal }) => {
     return `${year}-${month}-${date} ${hours}:${minutes}`;
   };
 
-  const [disabled, setDisabled] = useState(true);
-
-  const queryClient = useQueryClient();
-  const mutation = useMutation(addPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-    },
-  });
-
   const newPost = {
     id: shortid.generate(),
     body,
     userName,
-    password,
+    userId: user.uid,
     date: getToday(),
     kcal,
     exerciseHour,
@@ -48,21 +49,19 @@ const Write = ({ closeModal }) => {
     closeModal();
   };
 
-  return (
+  const navigateLogin = () => {
+    closeModal();
+    navigate("/login");
+  };
+  return user ? (
     <Modal>
-      <form onSubmit={onSubmitHandler}>
+      <form>
         <div>
           <label>작성자명</label>
           <input value={userName} onChange={onChangeUserNameHandler} />
         </div>
         {userName.length < 2 && <p>이름을 2글자 이상 입력해 주세요</p>}
         {userName.length >= 2 && <p>사용 가능한 이름입니다</p>}
-        <div>
-          <label>비밀번호</label>
-          <input type='password' value={password} onChange={onChangePasswordHandler} />
-        </div>
-        {password.length < 4 && <p>비밀번호를 4글자 이상 입력해 주세요</p>}
-        {password.length >= 4 && <p>사용 가능한 비밀번호입니다</p>}
         <div>
           <label>내용</label>
           <input value={body} onChange={onChangeBodyHandler} />
@@ -78,11 +77,19 @@ const Write = ({ closeModal }) => {
           <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
         </div>
         {!exerciseHour.length && <p>숫자를 입력하세요</p>}
-        <Button disabled={body.length < 5 || password.length < 4 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</Button>
-        <Button type='button' onClick={closeModal}>
+        <ButtonComp disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1} onClick={onSubmitHandler}>
+          저장
+        </ButtonComp>
+        <ButtonComp type='button' onClick={closeModal}>
           닫기
-        </Button>
+        </ButtonComp>
       </form>
+    </Modal>
+  ) : (
+    <Modal>
+      로그인 후 작성 가능합니다
+      <ButtonComp onClick={navigateLogin}>로그인</ButtonComp>
+      <ButtonComp onClick={closeModal}>닫기</ButtonComp>
     </Modal>
   );
 };

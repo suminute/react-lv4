@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./common/Button";
+import ButtonComp from "./common/ButtonComp";
 import Write from "../Main/Write";
 import Post from "../Main/Post";
 import { useQuery } from "react-query";
@@ -21,7 +21,7 @@ const Main = () => {
   return (
     <>
       <div>
-        <Button onClick={openModal}>글 작성하기</Button>
+        <ButtonComp onClick={openModal}>글 작성하기</ButtonComp>
       </div>
       {isOpen && <Write closeModal={closeModal} />}
       <Post posts={data}></Post>

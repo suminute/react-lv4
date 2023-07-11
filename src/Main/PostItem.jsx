@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import useModal from "../hooks/useModal";
 import { Link } from "react-router-dom";
-import Button from "../components/common/Button";
+import ButtonComp from "../components/common/ButtonComp";
 import ModifyPost from "./ModifyPost";
 import { useMutation, useQueryClient } from "react-query";
 import { deletePost } from "../api/posts";
+import { auth } from "../firebase";
+import { useSelector } from "react-redux";
 
 const PostItem = ({ posts, post }) => {
   const divCard = { border: "1px solid black", padding: "10px", margin: "10px" };
+  // const [user, setUser] = useState(auth.currentUser);
+  const { user } = useSelector((state) => state.user);
 
   const [isOpen, openModal, closeModal] = useModal();
 
@@ -38,14 +42,19 @@ const PostItem = ({ posts, post }) => {
         <p>{post.exerciseHour}</p>
         <p>{post.date}</p>
       </Link>
-      <Button onClick={openModal}>수정</Button>
+      {user ? user === post.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
+      {/* <ButtonComp onClick={openModal}>수정</ButtonComp> */}
       {isOpen && <ModifyPost posts={posts} post={post} id={post.id} closeModal={closeModal} />}
-      <Button
-        onClick={() => {
-          onClickDeleteButtonHandler(post.id);
-        }}>
-        삭제
-      </Button>
+      {user
+        ? user === post.userId && (
+            <ButtonComp
+              onClick={() => {
+                onClickDeleteButtonHandler(post.id);
+              }}>
+              삭제
+            </ButtonComp>
+          )
+        : null}
     </div>
   );
 };

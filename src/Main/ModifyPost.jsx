@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import useInput from "../hooks/useInput";
 import Modal from "../components/common/Modal";
-import Button from "../components/common/Button";
+import ButtonComp from "../components/common/ButtonComp";
 import { useMutation, useQueryClient } from "react-query";
 import { modifyPost } from "../api/posts";
+import { auth } from "../firebase";
 
 const ModifyPost = ({ posts, post, closeModal, id }) => {
   const [body, onChangeBodyHandler] = useInput(post.body);
@@ -21,15 +22,10 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
   const updatePost = (e) => {
     e.preventDefault();
     let modifiedPost = posts.find((post) => post.id === id);
-    const confirmPassword = window.prompt("비밀번호를 입력하세요");
-    if (modifiedPost.password === confirmPassword) {
-      modifiedPost = { ...modifiedPost, body, userName, kcal, exerciseHour };
-      mutation.mutate({ id, modifiedPost });
-      closeModal();
-      alert("수정되었습니다!");
-    } else {
-      alert("비밀번호가 틀렸습니다!");
-    }
+    modifiedPost = { ...modifiedPost, body, userName, kcal, exerciseHour };
+    mutation.mutate({ id, modifiedPost });
+    closeModal();
+    alert("수정되었습니다!");
   };
   return (
     <Modal>
@@ -52,10 +48,10 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
           <label>오늘 운동한 시간</label>
           <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
         </div>
-        <Button disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</Button>
-        <Button type='button' onClick={closeModal}>
+        <ButtonComp disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</ButtonComp>
+        <ButtonComp type='button' onClick={closeModal}>
           닫기
-        </Button>
+        </ButtonComp>
       </form>
     </Modal>
   );
