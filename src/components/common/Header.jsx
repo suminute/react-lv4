@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
-import ButtonComp from "./common/ButtonComp";
+import ButtonComp from "./ButtonComp";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
-import { deleteUser, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../redux/modules/userSlice";
+import { getUser } from "../../redux/modules/userSlice";
+import { login, logout } from "../../redux/modules/tokenSlice";
+import jwtDecode from "jwt-decode";
 
 const Header = () => {
-  const currnetUser = auth.currentUser;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    // auth.onAuthStateChanged(async (user) => {
+    auth.onIdTokenChanged(async (user) => {
       if (user) {
+        const token = await user.getIdToken();
         const userId = user.uid;
         dispatch(getUser(userId));
+        dispatch(login(token));
         setIsLogin(true);
       } else {
         dispatch(getUser(null));
@@ -26,10 +29,28 @@ const Header = () => {
     });
   }, []);
 
+  const checkTokenExpiration = async () => {
+    const token = sessionStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const expirationTime = jwtDecode(token).exp;
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (expirationTime < currentTime) {
+          dispatch(logOut());
+          alert("토큰이 만료되어 로그아웃 되었습니다");
+          await signOut(auth);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  setInterval(checkTokenExpiration, 60000);
+
   const logOut = async () => {
     await signOut(auth);
     dispatch(getUser(null));
-    console.log("로그아웃");
+    dispatch(logout());
   };
 
   return (

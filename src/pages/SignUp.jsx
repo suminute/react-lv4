@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useInput from "../hooks/useInput";
 import ButtonComp from "../components/common/ButtonComp";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { addUser, getUsers } from "../api/users";
@@ -11,8 +11,8 @@ const SignUp = () => {
   const [email, onChangeEmailHandler] = useInput("");
   const [password, onChangePasswordHandler] = useInput("");
   const [confPassword, onChangeConfPasswordHandler] = useInput("");
+  const [userName, onChangeUserNameHandler] = useInput("");
   const [disabled, setDisabled] = useState(true);
-
   const navigate = useNavigate();
 
   const { isLoading, isError, data } = useQuery("posts", getUsers);
@@ -58,8 +58,8 @@ const SignUp = () => {
 
   const signUp = async () => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { displayName: userName });
       const newUser = { email };
       mutation.mutate(newUser);
       navigate("/");
@@ -69,18 +69,23 @@ const SignUp = () => {
         case "auth/email-already-in-use":
           alert("이미 사용중인 이메일입니다");
         default:
-          alert("로그인 실패");
+          alert("회원가입 실패");
       }
     }
   };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <h2>로그인 페이지</h2>
+      <h2>회원가입 페이지</h2>
       <div>
         <label>아이디</label>
         <input value={email} onChange={onChangeEmailHandler} />
         {validateEmail(email)}
+      </div>
+      <div>
+        <label>이름</label>
+        <input value={userName} onChange={onChangeUserNameHandler} />
+        {userName.length < 2 && <p>2글자 이상 입력해 주세요</p>}
       </div>
       <div>
         <label>비밀번호</label>
@@ -97,6 +102,7 @@ const SignUp = () => {
       <ButtonComp disabled={disabled} onClick={signUp}>
         가입하기
       </ButtonComp>
+      <ButtonComp onClick={() => navigate("/")}>메인페이지</ButtonComp>
     </form>
   );
 };

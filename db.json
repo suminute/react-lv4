@@ -1,22 +1,14 @@
 {
   "posts": [
     {
-      "id": "VHDSYHEqGh",
-      "body": "와와아ㅗ오아앙",
-      "userName": "몽식몽식",
-      "userId": "b0x1QU6F4WOz9q4mTeVMGAZcD322",
-      "date": "23-07-11 17:06",
-      "kcal": "123",
-      "exerciseHour": "123"
-    },
-    {
-      "id": "fUnjvFrnn",
-      "body": "벌써 아홉시",
-      "userName": "와앙",
-      "userId": "jIiuBB2LLea6Yt5xDntzfOIatTo2",
-      "date": "23-07-11 20:23",
-      "kcal": "100",
-      "exerciseHour": "100"
+      "id": "Bm2mDMX3J9",
+      "body": "1233434343434",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-11 21:10",
+      "kcal": "12345",
+      "exerciseHour": "12",
+      "isDeleted": false
     }
   ],
   "users": [
@@ -43,6 +35,10 @@
     {
       "email": "test8@test.com",
       "id": 6
+    },
+    {
+      "email": "123@123.com",
+      "id": 7
     }
   ]
 }

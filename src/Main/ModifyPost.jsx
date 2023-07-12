@@ -29,13 +29,7 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
   };
   return (
     <Modal>
-      <form onSubmit={updatePost}>
-        <div>
-          <label>작성자명</label>
-          <input value={userName} onChange={onChangeUserNameHandler} />
-        </div>
-        {userName.length < 2 && <p>이름을 2글자 이상 입력해 주세요</p>}
-        {userName.length >= 2 && <p>사용 가능한 이름입니다</p>}
+      <form>
         <div>
           <label>내용</label>
           <input value={body} onChange={onChangeBodyHandler} />
@@ -43,12 +37,16 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
         <div>
           <label>오늘 소모한 칼로리</label>
           <input type='number' value={kcal} onChange={onChangeKcalHandler} />
+          {!kcal.length && <p>숫자를 입력하세요</p>}
         </div>
         <div>
           <label>오늘 운동한 시간</label>
           <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
+          {!exerciseHour.length && <p>숫자를 입력하세요</p>}
         </div>
-        <ButtonComp disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1}>저장</ButtonComp>
+        <ButtonComp disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1} onClick={updatePost}>
+          저장
+        </ButtonComp>
         <ButtonComp type='button' onClick={closeModal}>
           닫기
         </ButtonComp>

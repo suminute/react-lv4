@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/common/Header";
 import Main from "../components/Main";
-import Footer from "../components/Footer";
+import Footer from "../components/common/Footer";
 import { auth } from "../firebase";
 
 const Home = () => {

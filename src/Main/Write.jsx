@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 const Write = ({ closeModal }) => {
   const [body, onChangeBodyHandler] = useInput("");
-  const [userName, onChangeUserNameHandler] = useInput("");
   const [kcal, onChangeKcalHandler] = useInput("");
   const [exerciseHour, onChangeExerciseHourHandler] = useInput("");
   const [user, setUser] = useState(auth.currentUser);
@@ -36,11 +35,12 @@ const Write = ({ closeModal }) => {
   const newPost = {
     id: shortid.generate(),
     body,
-    userName,
-    userId: user.uid,
+    userName: user ? user.displayName : "",
+    userId: user ? user.uid : "",
     date: getToday(),
     kcal,
     exerciseHour,
+    isDeleted: false,
   };
 
   const onSubmitHandler = (e) => {
@@ -57,12 +57,6 @@ const Write = ({ closeModal }) => {
     <Modal>
       <form>
         <div>
-          <label>작성자명</label>
-          <input value={userName} onChange={onChangeUserNameHandler} />
-        </div>
-        {userName.length < 2 && <p>이름을 2글자 이상 입력해 주세요</p>}
-        {userName.length >= 2 && <p>사용 가능한 이름입니다</p>}
-        <div>
           <label>내용</label>
           <input value={body} onChange={onChangeBodyHandler} />
         </div>
@@ -77,7 +71,7 @@ const Write = ({ closeModal }) => {
           <input type='number' value={exerciseHour} onChange={onChangeExerciseHourHandler} />
         </div>
         {!exerciseHour.length && <p>숫자를 입력하세요</p>}
-        <ButtonComp disabled={body.length < 5 || userName.length < 2 || kcal.length < 1 || exerciseHour.length < 1} onClick={onSubmitHandler}>
+        <ButtonComp disabled={body.length < 5 || kcal.length < 1 || exerciseHour.length < 1} onClick={onSubmitHandler}>
           저장
         </ButtonComp>
         <ButtonComp type='button' onClick={closeModal}>
