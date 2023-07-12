@@ -25,9 +25,6 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
       dispatch(getUser(user.uid));
-
-      // window.sessionStorage.setItem("user", user.uid);
-      // window.sessionStorage.setItem("userEmail", user.email);
       navigate("/");
     } catch (error) {
       console.error(error);

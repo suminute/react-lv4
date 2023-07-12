@@ -7,8 +7,8 @@ const getPosts = async () => {
 };
 
 // 삭제
-const deletePost = async (id) => {
-  await axios.delete(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`);
+const deletePost = async ({ id, deletedPost }) => {
+  await axios.patch(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`, deletedPost);
 };
 
 // 추가
