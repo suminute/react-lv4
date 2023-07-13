@@ -170,6 +170,24 @@
       "body": "이야야아앙",
       "currentTime": 1689234308,
       "isDeleted": false
+    },
+    {
+      "id": "9hWZU2yFm",
+      "postId": "PKjeDctreg",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "userName": "123",
+      "body": "안녕하세요~",
+      "currentTime": 1689238990,
+      "isDeleted": true
+    },
+    {
+      "id": "8XJS_eIp3c",
+      "postId": "PKjeDctreg",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "userName": "123",
+      "body": "반갑습니당",
+      "currentTime": 1689239089,
+      "isDeleted": false
     }
   ]
 }

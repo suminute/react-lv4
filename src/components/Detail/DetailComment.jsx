@@ -15,7 +15,7 @@ const DetailComment = ({ id }) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user.userId) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -70,7 +70,7 @@ const DetailComment = ({ id }) => {
     <>
       <form>
         <CardContent sx={{ display: "flex", justifyContent: "center" }}>
-          {user ? (
+          {user.userId ? (
             <TextField
               id='standard-password-input'
               label='댓글을 작성하세요'
@@ -81,7 +81,7 @@ const DetailComment = ({ id }) => {
               sx={{ width: "300px" }}
             />
           ) : (
-            <TextField id='standard-password-input' label='로그인 후 이용 가능합니다' autoComplete='current-password' variant='standard' disabled={disabled} sx={{ width: "300px" }} />
+            <TextField id='standard-password-input' label='로그인 후 이용 가능합니다' autoComplete='current-password' variant='standard' disabled={true} sx={{ width: "300px" }} />
           )}
           <ButtonComp type={"submit"} onClick={onSubitButtonHandler} disabled={disabled}>
             저장
