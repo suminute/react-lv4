@@ -64,6 +64,7 @@ const Login = () => {
               로그인
             </ButtonComp>
             <ButtonComp onClick={() => navigate("/signup")}>회원가입</ButtonComp>
+            <ButtonComp onClick={() => navigate("/")}>메인페이지</ButtonComp>
           </StFlexDiv>
         </form>
       </div>
