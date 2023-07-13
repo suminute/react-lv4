@@ -39,6 +39,7 @@ const Header = () => {
           dispatch(logOut());
           alert("토큰이 만료되어 로그아웃 되었습니다");
           await signOut(auth);
+          navigate(0);
         }
       } catch (error) {
         console.error(error);
@@ -52,13 +53,19 @@ const Header = () => {
     dispatch(getUser(null));
     dispatch(logout());
     navigate("/");
-    navigate(0);
   };
 
   return (
     <StHeader>
       <StDiv>
-        <div className='title'>Activerve</div>
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+          className='title'
+          style={{ cursor: "pointer" }}>
+          Activerve
+        </div>
         <nav>
           {isLogin ? (
             <ButtonComp onClick={logOut}>로그아웃</ButtonComp>
@@ -80,7 +87,6 @@ const StHeader = styled.header`
   min-width: 992px;
 `;
 const StDiv = styled.div`
-  /* background-color: #fd841f; */
   height: 100px;
   display: flex;
   justify-content: center;
