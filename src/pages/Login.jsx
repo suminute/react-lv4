@@ -22,6 +22,7 @@ const Login = () => {
     }
   }, [email, password]);
 
+  // 로그인
   const logIn = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -40,6 +41,7 @@ const Login = () => {
       }
     }
   };
+
   return (
     <StDiv>
       <div>

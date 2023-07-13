@@ -9,7 +9,7 @@
       "currentTime": 1689233152,
       "kcal": "1515",
       "exerciseHour": "12121",
-      "isDeleted": false
+      "isDeleted": true
     },
     {
       "id": "0tY0NtzuM4",
@@ -31,6 +31,17 @@
       "currentTime": 1689233303,
       "kcal": "4564",
       "exerciseHour": "231",
+      "isDeleted": false
+    },
+    {
+      "id": "PtWM_tkDnQ",
+      "body": "내일..더..한다...",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 20:20",
+      "currentTime": 1689247205,
+      "kcal": "20",
+      "exerciseHour": "60",
       "isDeleted": false
     }
   ],

@@ -17,8 +17,22 @@ const SignUp = () => {
   const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
 
+  // 쿼리
   const { isLoading, isError, data } = useQuery("posts", getUsers);
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+    },
+  });
 
+  useEffect(() => {
+    if (validateEmail(email) && password.length >= 8 && confPassword === password) {
+      setDisabled(false);
+    }
+  }, [email, password, confPassword]);
+
+  // 중복 이메일 검증
   const validateDuplicateEmail = (email) => {
     let isTrue = true;
     data.map((user) => {
@@ -31,9 +45,9 @@ const SignUp = () => {
     return isTrue;
   };
 
+  // 이메일 검증
   const validateEmail = (email) => {
     const regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    // return regex.test(email);
     if (regex.test(email)) {
       if (validateDuplicateEmail(email)) {
         return "사용 가능한 이메일입니다";
@@ -45,10 +59,10 @@ const SignUp = () => {
     }
   };
 
+  // 이메일 검증 결과 불리언 값으로 return하는 함수
   const validateEmailBool = (email) => {
     let isTrue = true;
     const regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    // return regex.test(email);
     if (regex.test(email)) {
       if (validateDuplicateEmail(email)) {
         return isTrue;
@@ -60,6 +74,7 @@ const SignUp = () => {
     }
   };
 
+  // 비밀번호 확인 검증
   const validatePassword = (password, confPassword) => {
     if (password === confPassword) {
       return "비밀번호가 일치합니다";
@@ -68,19 +83,7 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    if (validateEmail(email) && password.length >= 8 && confPassword === password) {
-      setDisabled(false);
-    }
-  }, [email, password, confPassword]);
-
-  const queryClient = useQueryClient();
-  const mutation = useMutation(addUser, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("users");
-    },
-  });
-
+  // 가입하기 버튼
   const signUp = async () => {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -90,12 +93,6 @@ const SignUp = () => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          alert("이미 사용중인 이메일입니다");
-        default:
-          alert("회원가입 실패");
-      }
     }
   };
 
@@ -107,7 +104,7 @@ const SignUp = () => {
         </Typography>
         <div>
           <TextField
-            error={validateEmailBool(email) ? false : true}
+            error={!validateEmailBool(email) ? true : false}
             id='standard-error-helper-text'
             label='아이디'
             value={email}
