@@ -61,10 +61,10 @@ const PostItem = ({ posts, post }) => {
         </Link>
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
-        {user ? user === post.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
+        {user ? user.userId === post.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
         {isOpen && <ModifyPost posts={posts} post={post} id={post.id} closeModal={closeModal} />}
         {user
-          ? user === post.userId && (
+          ? user.userId === post.userId && (
               <ButtonComp
                 onClick={() => {
                   onClickDeleteButtonHandler(post.id);
