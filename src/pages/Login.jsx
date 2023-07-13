@@ -6,6 +6,8 @@ import useInput from "../hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../redux/modules/userSlice";
+import { styled } from "styled-components";
+import { TextField } from "@mui/material";
 
 const Login = () => {
   const [email, onChangeEmailHandler] = useInput("");
@@ -39,21 +41,62 @@ const Login = () => {
     }
   };
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <StDiv>
       <div>
-        <label>아이디</label>
-        <input value={email} onChange={onChangeEmailHandler} />
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div>
+            <TextField
+              id='standard-helperText'
+              label='ID'
+              defaultValue='Default Value'
+              helperText='이메일 형식으로 입력하세요'
+              variant='standard'
+              value={email}
+              onChange={onChangeEmailHandler}
+              sx={{ width: "300px" }}
+            />
+          </div>
+          <div>
+            <TextField
+              id='standard-password-input'
+              label='Password'
+              type='password'
+              autoComplete='current-password'
+              variant='standard'
+              value={password}
+              onChange={onChangePasswordHandler}
+              sx={{ width: "300px" }}
+            />
+          </div>
+          <StFlexDiv>
+            <ButtonComp type={"submit"} onClick={logIn} disabled={disabled}>
+              로그인
+            </ButtonComp>
+            <ButtonComp onClick={() => navigate("/signup")}>회원가입</ButtonComp>
+          </StFlexDiv>
+        </form>
       </div>
-      <div>
-        <label>비밀번호</label>
-        <input value={password} type='password' onChange={onChangePasswordHandler} />
-      </div>
-      <ButtonComp type={"submit"} onClick={logIn} disabled={disabled}>
-        로그인
-      </ButtonComp>
-      <ButtonComp onClick={() => navigate("/signup")}>회원가입</ButtonComp>
-    </form>
+    </StDiv>
   );
 };
 
 export default Login;
+
+const StDiv = styled.div`
+  min-height: 90vh;
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StFlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+`;

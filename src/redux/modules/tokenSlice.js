@@ -8,12 +8,10 @@ const tokenSlice = createSlice({
   reducers: {
     login(state, action) {
       state.token = action.payload.token;
-
       sessionStorage.setItem("accessToken", action.payload);
     },
     logout(state) {
       state.token = null;
-
       sessionStorage.removeItem("accessToken");
     },
   },

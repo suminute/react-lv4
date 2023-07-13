@@ -4,6 +4,8 @@ import Detail from "../pages/Detail";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import NotFoundPage from "../components/common/NotFoundPage";
+import Header from "../components/common/Header";
+import Footer from "../components/common/Footer";
 
 const Router = () => {
   const token = sessionStorage.getItem("accessToken");
@@ -16,6 +18,7 @@ const Router = () => {
         {!token && <Route path='/signup' element={<SignUp />} />}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
