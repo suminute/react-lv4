@@ -1,13 +1,69 @@
 {
   "posts": [
     {
-      "id": "Bm2mDMX3J9",
-      "body": "1233434343434",
+      "id": "KlIwQM5m3",
+      "body": "12345",
       "userName": "123",
       "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
-      "date": "23-07-11 21:10",
-      "kcal": "12345",
-      "exerciseHour": "12",
+      "date": "23-07-13 09:32",
+      "currentTime": 1689208369,
+      "kcal": "123",
+      "exerciseHour": "123",
+      "isDeleted": false
+    },
+    {
+      "id": "FTShZnHxxG",
+      "body": "56489",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 09:32",
+      "currentTime": 1689208377,
+      "kcal": "656",
+      "exerciseHour": "654",
+      "isDeleted": false
+    },
+    {
+      "id": "VvIpunDeii",
+      "body": "958498",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 09:33",
+      "currentTime": 1689208398,
+      "kcal": "959",
+      "exerciseHour": "9564",
+      "isDeleted": false
+    },
+    {
+      "id": "NmYX49EfD",
+      "body": "오늘은 하체~3~!",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 09:33",
+      "currentTime": 1689208432,
+      "kcal": "100",
+      "exerciseHour": "65",
+      "isDeleted": false
+    },
+    {
+      "id": "Wk49nyA1pU",
+      "body": "필라테스!",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 09:36",
+      "currentTime": 1689208582,
+      "kcal": "100",
+      "exerciseHour": "60",
+      "isDeleted": false
+    },
+    {
+      "id": "8Rhb7adww9",
+      "body": "123123123",
+      "userName": "123",
+      "userId": "DqZFl7PvF7XrZ1QfkNzYVkMeZst1",
+      "date": "23-07-13 10:58",
+      "currentTime": 1689213512,
+      "kcal": "123",
+      "exerciseHour": "123",
       "isDeleted": false
     }
   ],
@@ -15,26 +71,6 @@
     {
       "id": 1,
       "email": "test@test.com"
-    },
-    {
-      "id": 2,
-      "email": "test3@test.com"
-    },
-    {
-      "email": "test7@test.com",
-      "id": 3
-    },
-    {
-      "email": "test6@test.com",
-      "id": 4
-    },
-    {
-      "email": "test5@test.com",
-      "id": 5
-    },
-    {
-      "email": "test8@test.com",
-      "id": 6
     },
     {
       "email": "123@123.com",
