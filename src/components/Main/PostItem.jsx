@@ -9,12 +9,13 @@ import { useSelector } from "react-redux";
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 
 const PostItem = ({ posts, post }) => {
+  const token = sessionStorage.getItem("accessToken");
   const { user } = useSelector((state) => state.user);
 
   const [isOpen, openModal, closeModal] = useModal();
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(deletePost, {
+  const deletemutaion = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
@@ -25,7 +26,7 @@ const PostItem = ({ posts, post }) => {
     const deletedPost = { ...post, isDeleted: true };
     const deleteConfirm = window.confirm("삭제하시겠습니까?");
     if (deleteConfirm) {
-      mutation.mutate({ id, deletedPost });
+      deletemutaion.mutate({ id, deletedPost });
       alert("삭제 되었습니다!");
     } else {
       return false;
@@ -61,9 +62,9 @@ const PostItem = ({ posts, post }) => {
         </Link>
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
-        {user ? user.userId === post.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
+        {token ? user.userId === post.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
         {isOpen && <ModifyPost posts={posts} post={post} id={post.id} closeModal={closeModal} />}
-        {user
+        {token
           ? user.userId === post.userId && (
               <ButtonComp
                 onClick={() => {

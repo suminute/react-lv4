@@ -13,6 +13,7 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
   const [kcal, onChangeKcalHandler] = useInput(post.kcal);
   const [exerciseHour, onChangeExerciseHourHandler] = useInput(post.exerciseHour);
 
+  // 쿼리
   const queryClient = useQueryClient();
   const mutation = useMutation(modifyPost, {
     onSuccess: () => {
@@ -20,6 +21,7 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
     },
   });
 
+  // 수정 버튼
   const updatePost = (e) => {
     e.preventDefault();
     let modifiedPost = posts.find((post) => post.id === id);
@@ -28,6 +30,7 @@ const ModifyPost = ({ posts, post, closeModal, id }) => {
     closeModal();
     alert("수정되었습니다!");
   };
+
   return (
     <TransitionsModal>
       <form>

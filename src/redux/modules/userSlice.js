@@ -18,6 +18,7 @@ const userSlice = createSlice({
       } else {
         state.userId = null;
         state.displayName = null;
+        return state;
       }
     },
   },

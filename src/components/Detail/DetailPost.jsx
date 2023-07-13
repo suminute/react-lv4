@@ -12,22 +12,22 @@ import { useNavigate } from "react-router-dom";
 import DetailComment from "./DetailComment";
 
 const DetailPost = () => {
+  const token = sessionStorage.getItem("accessToken");
   const { id } = useParams();
   const { isLoading, isError, data } = useQuery("posts", getPosts);
   const [posts, setPosts] = useState(data);
   const detailPost = data?.find((post) => post.id === id);
-
   const { user } = useSelector((state) => state.user);
   const [isOpen, openModal, closeModal] = useModal();
+  const navigate = useNavigate();
 
+  // 쿼리
   const queryClient = useQueryClient();
-  const mutation = useMutation(deletePost, {
+  const deletemutaion = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
   });
-
-  const navigate = useNavigate();
 
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -36,12 +36,13 @@ const DetailPost = () => {
     return <div>오류 발생...</div>;
   }
 
+  // 삭제 버튼
   const onClickDeleteButtonHandler = (id) => {
     const post = posts.find((post) => post.id === id);
     const deletedPost = { ...post, isDeleted: true };
     const deleteConfirm = window.confirm("삭제하시겠습니까?");
     if (deleteConfirm) {
-      mutation.mutate({ id, deletedPost });
+      deletemutaion.mutate({ id, deletedPost });
       alert("삭제 되었습니다!");
       navigate("/");
     } else {
@@ -77,9 +78,9 @@ const DetailPost = () => {
           <Typography>{detailPost.date}</Typography>
         </CardContent>
         <CardActions style={{ justifyContent: "center" }}>
-          {user ? user.userId === detailPost.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
+          {token ? user.userId === detailPost.userId && <ButtonComp onClick={openModal}>수정</ButtonComp> : null}
           {isOpen && <ModifyPost posts={posts} post={detailPost} id={detailPost.id} closeModal={closeModal} />}
-          {user
+          {token
             ? user.userId === detailPost.userId && (
                 <ButtonComp
                   onClick={() => {

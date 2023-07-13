@@ -12,7 +12,7 @@ import { styled } from "styled-components";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLogin, setIsLogin] = useState(false);
+  const token = sessionStorage.getItem("accessToken");
 
   useEffect(() => {
     // auth.onAuthStateChanged(async (user) => {
@@ -21,16 +21,14 @@ const Header = () => {
         const token = await user.getIdToken();
         dispatch(getUser({ userId: user.uid, displayName: user.displayName }));
         dispatch(login(token));
-        setIsLogin(true);
       } else {
         dispatch(getUser(null));
-        setIsLogin(false);
       }
     });
   }, []);
 
+  // 토큰 유효시간 체크
   const checkTokenExpiration = async () => {
-    const token = sessionStorage.getItem("accessToken");
     if (token) {
       try {
         const expirationTime = jwtDecode(token).exp;
@@ -48,11 +46,13 @@ const Header = () => {
   };
   setInterval(checkTokenExpiration, 60000);
 
+  // 로그아웃
   const logOut = async () => {
     await signOut(auth);
     dispatch(getUser(null));
     dispatch(logout());
     navigate("/");
+    // navigate(0);
   };
 
   return (
@@ -67,7 +67,7 @@ const Header = () => {
           Activerve
         </div>
         <nav>
-          {isLogin ? (
+          {token ? (
             <ButtonComp onClick={logOut}>로그아웃</ButtonComp>
           ) : (
             <>

@@ -17,6 +17,7 @@ const Write = ({ closeModal }) => {
   const [user, setUser] = useState(auth.currentUser);
   const navigate = useNavigate();
 
+  // 쿼리
   const queryClient = useQueryClient();
   const mutation = useMutation(addPost, {
     onSuccess: () => {
@@ -24,6 +25,7 @@ const Write = ({ closeModal }) => {
     },
   });
 
+  // 날짜 변환
   const getToday = () => {
     const today = new Date();
     const year = ("0" + today.getFullYear()).slice(-2);
@@ -46,6 +48,7 @@ const Write = ({ closeModal }) => {
     isDeleted: false,
   };
 
+  // 저장 버튼
   const onSubmitHandler = (e) => {
     e.preventDefault();
     mutation.mutate(newPost);
@@ -56,6 +59,7 @@ const Write = ({ closeModal }) => {
     closeModal();
     navigate("/login");
   };
+
   return user ? (
     <Box>
       <TransitionsModal>

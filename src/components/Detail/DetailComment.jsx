@@ -9,19 +9,13 @@ import shortid from "shortid";
 import { styled } from "styled-components";
 
 const DetailComment = ({ id }) => {
+  const token = sessionStorage.getItem("accessToken");
   const { isLoading, isError, data } = useQuery("comments", getComments);
   const [comment, onChangeCommentHandler, setComment] = useInput("");
   const { user } = useSelector((state) => state.user);
   const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    if (user.userId) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, []);
-
+  // 쿼리
   const queryClient = useQueryClient();
   const mutation = useMutation(addComment, {
     onSuccess: () => {
@@ -34,6 +28,14 @@ const DetailComment = ({ id }) => {
     },
   });
 
+  useEffect(() => {
+    if (token) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, []);
+
   const newComment = {
     id: shortid.generate(),
     postId: id,
@@ -44,16 +46,14 @@ const DetailComment = ({ id }) => {
     isDeleted: false,
   };
 
+  // 저장 버튼
   const onSubitButtonHandler = (e) => {
     e.preventDefault();
     mutation.mutate(newComment);
     setComment("");
   };
 
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
-
+  // 삭제 버튼
   const onDeleteButtonHandler = (id) => {
     const comment = data.find((comment) => comment.id === id);
     const deletedComment = { ...comment, isDeleted: true };
@@ -66,11 +66,15 @@ const DetailComment = ({ id }) => {
     }
   };
 
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
+
   return (
     <>
       <form>
         <CardContent sx={{ display: "flex", justifyContent: "center" }}>
-          {user.userId ? (
+          {token ? (
             <TextField
               id='standard-password-input'
               label='댓글을 작성하세요'
@@ -100,7 +104,7 @@ const DetailComment = ({ id }) => {
                 <Typography align='left' sx={{ width: "350px" }}>
                   {comment.body}
                 </Typography>
-                {user ? user.userId === comment.userId && <ButtonComp onClick={() => onDeleteButtonHandler(comment.id)}>X</ButtonComp> : null}
+                {token ? user.userId === comment.userId && <ButtonComp onClick={() => onDeleteButtonHandler(comment.id)}>X</ButtonComp> : null}
               </StDiv>
             );
           })}
