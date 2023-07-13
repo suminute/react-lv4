@@ -26,8 +26,8 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      dispatch(getUser(user.uid));
-      navigate("/");
+      dispatch(getUser({ displayName: user.displayName, userId: user.uid }));
+      navigate(-1);
     } catch (error) {
       console.error(error);
       switch (error.code) {
@@ -45,16 +45,7 @@ const Login = () => {
       <div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div>
-            <TextField
-              id='standard-helperText'
-              label='ID'
-              defaultValue='Default Value'
-              helperText='이메일 형식으로 입력하세요'
-              variant='standard'
-              value={email}
-              onChange={onChangeEmailHandler}
-              sx={{ width: "300px" }}
-            />
+            <TextField id='standard-helperText' label='ID' helperText='이메일 형식으로 입력하세요' variant='standard' value={email} onChange={onChangeEmailHandler} sx={{ width: "300px" }} />
           </div>
           <div>
             <TextField

@@ -19,8 +19,7 @@ const Header = () => {
     auth.onIdTokenChanged(async (user) => {
       if (user) {
         const token = await user.getIdToken();
-        const userId = user.uid;
-        dispatch(getUser(userId));
+        dispatch(getUser({ userId: user.uid, displayName: user.displayName }));
         dispatch(login(token));
         setIsLogin(true);
       } else {
@@ -52,6 +51,8 @@ const Header = () => {
     await signOut(auth);
     dispatch(getUser(null));
     dispatch(logout());
+    navigate("/");
+    navigate(0);
   };
 
   return (

@@ -19,6 +19,8 @@ const ButtonComp = ({ type, onClick, children, disabled }) => {
     buttonStyle = { size: "small", variant: "outlined" };
   } else if (children === "메인페이지") {
     buttonStyle = { size: "small", variant: "outlined" };
+  } else if (children === "X") {
+    buttonStyle = { size: "small", variant: "text", color: "warning" };
   }
   return (
     <Button type={type} onClick={onClick} disabled={disabled} sx={{ margin: "5px" }} {...buttonStyle}>

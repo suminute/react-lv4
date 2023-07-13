@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  user: {
+    userId: null,
+    displayName: null,
+  },
 };
 
 const userSlice = createSlice({
@@ -9,8 +12,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getUser: (state, action) => {
-      state.user = action.payload;
-      return state;
+      if (action.payload) {
+        state.user = action.payload;
+        return state;
+      } else {
+        state.userId = null;
+        state.displayName = null;
+      }
     },
   },
 });

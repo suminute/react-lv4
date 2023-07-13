@@ -85,7 +85,7 @@ const SignUp = () => {
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, { displayName: userName });
-      const newUser = { email };
+      const newUser = { email, userName, userId: user.uid };
       mutation.mutate(newUser);
       navigate("/");
     } catch (error) {
